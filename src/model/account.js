@@ -16,12 +16,12 @@ const accountSchema = new Schema(
     },
     userId: {
       require: true,
-      type: mongoose.type.objectId,
+      type: mongoose.Types.objectId,
       ref: 'User',
     },
-  },
-  { timestamps: true }
-);
+  },{ timestamps: true });
+
 
 const Account = model('Account', accountSchema);
+
 export default Account;

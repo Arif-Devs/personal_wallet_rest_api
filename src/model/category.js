@@ -12,9 +12,10 @@ const categorySchema = new Schema(
       type: String,
       unique: true,
     },
-  },
-  { timestamps: true }
-);
+  },{ timestamps: true });
+
+
 
 const Category = model('Category', categorySchema);
+
 export default Category;

@@ -1,9 +1,9 @@
 import { Schema, model } from 'mongoose';
 
-const expanseSchema = new Schema(
+const incomeSchema = new Schema(
   {
     note: {
-      require: true,
+      require: false,
       type: String,
     },
     amount: {
@@ -13,12 +13,11 @@ const expanseSchema = new Schema(
     userId: {
       require: true,
       type: mongoose.Types.objectId,
-      ref: 'User',
     },
     categoryId: {
       require: true,
       type: mongoose.Types.objectId,
-      ref: Category,
+      ref: 'Category',
     },
     accountId: {
       require: true,
@@ -29,7 +28,6 @@ const expanseSchema = new Schema(
 
 
 
-const Expanse = model('Expanse', expanseSchema);
+const Income = model('Income', incomeSchema);
 
-
-export default Expanse;
+export default Income;
