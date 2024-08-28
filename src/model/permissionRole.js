@@ -2,15 +2,15 @@ import { Schema, model } from 'mongoose';
 
 const permissionRoleSchema = new Schema(
   {
-    roleid: {
+    roleId: {
       required: true,
-      type: mongoose.Types.ObjectId,
+      type: Schema.ObjectId,
       ref: 'Role',
       unique: false,
     },
     permissionId: {
       require: true,
-      type: mongoose.Types.ObjectId,
+      type: Schema.ObjectId,
       ref: 'Permission',
       unique: false,
     },

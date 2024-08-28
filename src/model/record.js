@@ -2,7 +2,7 @@ import { Schema, model } from 'mongoose'
 
 const recordSchema = new Schema({
     userId: {
-        type: mongoose.Types.ObjectId,
+        type: Schema.ObjectId,
         ref: 'User'
     },
     totalIncome: {

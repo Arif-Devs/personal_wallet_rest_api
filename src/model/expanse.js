@@ -12,17 +12,17 @@ const expanseSchema = new Schema(
     },
     userId: {
       require: true,
-      type: mongoose.Types.objectId,
+      type: Schema.ObjectId,
       ref: 'User',
     },
     categoryId: {
       require: true,
-      type: mongoose.Types.objectId,
+      type: Schema.ObjectId,
       ref: Category,
     },
     accountId: {
       require: true,
-      type: mongoose.Types.objectId,
+      type: Schema.ObjectId,
       ref: 'Account',
     },
   },{ timestamps: true });

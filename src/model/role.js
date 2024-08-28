@@ -1,9 +1,11 @@
 import { Schema, model } from 'mongoose'
 
 const roleSchema = new Schema({
-    name: true,
-    type: String,
-    unique: true
+    name: {
+        require: true,
+        type: String,
+        unique: true
+    }
 },{ timestamps: true });
 
 

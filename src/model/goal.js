@@ -20,7 +20,7 @@ const goalSchema = new Schema(
     },
     userId: {
       require: true,
-      type: mongoose.Types.objectId,
+      type: Schema.ObjectId,
       ref: 'User',
       unique: true,
     },

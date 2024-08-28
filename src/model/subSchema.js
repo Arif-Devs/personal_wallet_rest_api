@@ -16,7 +16,7 @@ export const userSubSchema = new Schema({
         require: false
     },
     userId: {
-        type: mongoose.Types.ObjectId,
+        type: Schema.ObjectId,
         ref: 'User'
     }
 })

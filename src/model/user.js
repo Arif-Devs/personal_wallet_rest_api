@@ -1,9 +1,9 @@
-import {Schema , model} from "mongoose"
+import { Schema, model } from "mongoose";
 
 const userSchema = new Schema({
-    username : {
-        require : true,
+    userName : {
         type: String,
+        require : true,
         unique: true,
     },
     email:{
@@ -20,7 +20,7 @@ const userSchema = new Schema({
         require : false,
     },
     roleId : {
-        type: Schema.Types.ObjectId,
+        type: Schema.ObjectId,
         ref : 'Role',
     },
     verification_token : {
