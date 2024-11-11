@@ -11,9 +11,7 @@ const connectMongoDB = async () => {
       mode === 'test'
         ? process.env.MONGOOSE_TEST_STRING
         : process.env.MONGOOSE_STRING,
-      {
-        useNewUrlParser: true,
-      }
+     
     );
     console.log(`MongoDB server Connected on PORT ${mongoose.connection.host}`);
   } catch (error) {
