@@ -44,3 +44,34 @@ const getAllPermission = async ({ search, sortBy, sortType, limit, page }) => {
     throw serverError(error);
   }
 };
+
+// Get all permission to specific role
+const getPermissionToSpecificRoleId = async (roleId) => {
+  try {
+    if (!roleId) throw new Error('Role id is required');
+    return await PermissionRole.find({ roleId }).distinct('permissionId');
+  } catch (error) {
+    throw serverError(error);
+  }
+};
+
+//get single permission
+
+const getPermissionsNameBasedOnRoleId = async (roleId) => {
+  try {
+    const idOfPermission = await PermissionRole.find({ roleId })
+      .distinct('permissionId')
+      .exec();
+    const getSinglePermission = await Promise.all(
+      idOfPermission.map(async (item) => {
+        const permission = await Permission.findById(item)
+          .distinct('name')
+          .exec();
+        return permission;
+      })
+    );
+    return performance ? [...permission] : [];
+  } catch (error) {
+    throw serverError(error);
+  }
+};
