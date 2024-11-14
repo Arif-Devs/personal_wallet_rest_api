@@ -59,11 +59,15 @@ const getPermissionToSpecificRoleId = async (roleId) => {
 
 const getPermissionsNameBasedOnRoleId = async (roleId) => {
   try {
+    // Retrieve distinct permissionIds associated with the roleId
     const idOfPermission = await PermissionRole.find({ roleId })
       .distinct('permissionId')
       .exec();
+
+    // Fetch all permissions with names in a single query
     const getSinglePermission = await Promise.all(
       idOfPermission.map(async (item) => {
+        // Map to only include permission names
         const permission = await Permission.findById(item)
           .distinct('name')
           .exec();
