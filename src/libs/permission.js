@@ -79,3 +79,30 @@ const getPermissionsNameBasedOnRoleId = async (roleId) => {
     throw serverError(error);
   }
 };
+
+//update by put
+
+const updateByPut = async (id, name) => {
+  try {
+    if (!name) throw new error('permission name is required');
+    let permission = await Permission.findById(id);
+    let state;
+    if (!permission) {
+      // Check if a permission with the same name already exists
+      const existsPermission = Permission.findOne({ name }).exec();
+      if (existsPermission) throw notFoundError('Permission already exists!');
+
+      //Create new permission
+      permission = new Permission({ name });
+      state = 'create';
+    } else {
+      //Update the existing permission
+      permission.name = name;
+      state = 'update';
+    }
+    await permission.save();
+    return { permission: permission._doc, state };
+  } catch (error) {
+    throw serverError(error);
+  }
+};
