@@ -80,7 +80,7 @@ const getPermissionsNameBasedOnRoleId = async (roleId) => {
   }
 };
 
-//update by put
+//update or create permission by put
 
 const updateByPut = async (id, name) => {
   try {
@@ -102,6 +102,27 @@ const updateByPut = async (id, name) => {
     }
     await permission.save();
     return { permission: permission._doc, state };
+  } catch (error) {
+    throw serverError(error);
+  }
+};
+
+// Delete single permission
+const deletePermission = async (id) => {
+  try {
+    if (!id) throw new Error('id is required');
+
+    // Check if the permission exists
+    const permission = await Permission.findById(id).exec();
+
+    if (!permission) throw new notFoundError('Permission not found');
+    //Delete related role permission
+
+    await PermissionRole.deleteMany({ permissionId: id });
+
+    //Delete permission itself
+    await permission.deleteOne();
+    return { message: 'permission delete successfully', permissionId: id };
   } catch (error) {
     throw serverError(error);
   }
