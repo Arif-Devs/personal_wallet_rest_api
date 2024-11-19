@@ -116,8 +116,8 @@ const deletePermission = async (id) => {
     const permission = await Permission.findById(id).exec();
 
     if (!permission) throw new notFoundError('Permission not found');
-    //Delete related role permission
 
+    //Delete related role permission
     await PermissionRole.deleteMany({ permissionId: id });
 
     //Delete permission itself
@@ -126,4 +126,53 @@ const deletePermission = async (id) => {
   } catch (error) {
     throw serverError(error);
   }
+};
+// Function to update permissions by Role ID
+
+const updatePermissionByRoleId = async (
+  roleId,
+  permissionIds,
+  newPermissions
+) => {
+  try {
+    //check permission Id exist or not
+    const updatePermissions =
+      permissionIds.length > 0 ? [...permissionIds] : [];
+
+    //Converts all permissionIds to strings for consistent comparison, ensuring no type mismatch when comparing IDs.
+    if (newPermissions && newPermissions.length > 0) {
+      const permissionIds = permissionIds.map((item) => item.toString());
+
+      // Validate the new permission
+      await Promise.all(
+        newPermissions.map(async (newPermissionId) => {
+          const permission = await Permission.findById(newPermissionId).exec();
+          if (!permission) throw new Error('Invalid Permission Id!');
+        })
+      );
+    } else {
+      //Check duplication id for ensure the newId is unique
+      if (!permissionIds.includes(newPermissionId)) {
+        updatePermissions.push(newPermissionId); // replace the old id
+        const newRole = new PermissionRole();
+        newRole.roleId = roleId;
+        newRole.permissionId = newPermissionId;
+        await newRole.save();
+      }
+    }
+    return updatePermissions;
+  } catch (error) {
+    throw serverError(error);
+  }
+};
+
+export default {
+  countPermission,
+  createPermission,
+  getAllPermission,
+  getPermissionToSpecificRoleId,
+  getPermissionsNameBasedOnRoleId,
+  updateByPut,
+  deletePermission,
+  updatePermissionByRoleId,
 };
