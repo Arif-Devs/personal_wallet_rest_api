@@ -3,4 +3,10 @@ const generateSortType = (sortType) => {
   return sortType === 'desc' ? -1 : 1;
 };
 
-export { generateSortType };
+//Generate query string
+const generateQueryString = (path, query)=>{
+  const encodeQuery = Object.keys(query).map((key)=>encodeURIComponent(key)+'='+encodeURIComponent(query[key])).join('&') 
+  return `${path}?${encodeQuery}`
+}
+
+export { generateSortType, generateQueryString };
