@@ -1,7 +1,7 @@
-import Permission from '../model/permission';
-import { notFoundError, serverError } from '../utils/error';
-import PermissionRole from '../model/permissionRole';
-import { generateSortType } from '../utils/query';
+import Permission from '../model/permission.js';
+import { notFoundError, serverError } from '../utils/error.js';
+import PermissionRole from '../model/permissionRole.js';
+import { generateSortType } from '../utils/query.js';
 
 // Count data based on filter query
 const countPermission = (data) => {
