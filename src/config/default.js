@@ -12,7 +12,7 @@ const TODATE = new Date();
 const MINPRICE = 1;
 const MAXPRICE = null;
 
-export default {
+export {
   LIMIT,
   PAGE,
   SORTTYPE,

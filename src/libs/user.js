@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt'
 import { addMinutes } from 'date-fns'
 import User from '../model/user.js'
 import { notFoundError, serverError } from '../utils/error.js'
-import tokenLibs from './index.js'
+import {tokenLibs} from './index.js'
 import ip from 'ip'
 import {DEFAULTPASS} from '../config/auth.js'
 import Role from '../model/role.js'
@@ -38,4 +38,4 @@ const registerUser = async ({ userName, email, password, phone, roleId }) => {
     }
 }
 
-export default {registerUser};
+export default registerUser;

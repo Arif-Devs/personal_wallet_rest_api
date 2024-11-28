@@ -27,7 +27,7 @@ const generateAllDataHateoasLinks = (data,url,baseUrl,page,totalPage,queryParams
     return links
 }
 
-export default{
+export{
     createHateoasLinkGenerator,
     generateAllDataHateoasLinks
 }

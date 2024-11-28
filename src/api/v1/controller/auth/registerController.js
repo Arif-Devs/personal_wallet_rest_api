@@ -1,4 +1,4 @@
-import  userLibs  from "../../../../libs/index.js";
+import  {userLibs}  from "../../../../libs/index.js";
 
 const register = async (req, res, next) => {
     try {
