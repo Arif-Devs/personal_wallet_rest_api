@@ -1,10 +1,12 @@
 import authRequest from './authenticateRequest.js'
 import userRequest from './userRequest.js'
+import permissionRequest from './permissionRequest.js'
 
 
 
-export {
+export  {
     authRequest,
     userRequest,
+    permissionRequest
    
 }
