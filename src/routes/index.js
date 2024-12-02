@@ -3,7 +3,7 @@ const router = express.Router();
 import authController from '../api/v1/controller/auth/index.js';
 import  {authRequest}  from '../request/index.js';
 import PermissionController from '../api/v1/controller/permission/index.js';
-import  {requestValidator}  from '../middleware/index.js';
+import  {requestValidator, authenticate}  from '../middleware/index.js';
 import  {permissionRequest}  from '../request/index.js';
 
 
@@ -17,7 +17,7 @@ router.get('/health', (_req, res) =>
 
 //Permission Routes->
  router.route('/permissions')
-.post(permissionRequest.permissionCreateRequest,requestValidator,PermissionController.create)
+.post(authenticate,permissionRequest.permissionCreateRequest,requestValidator,PermissionController.create)
 
 
 
