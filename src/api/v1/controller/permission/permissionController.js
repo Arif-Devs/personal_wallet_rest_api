@@ -5,7 +5,7 @@ import generatePagination from '../../../../utils/pagination.js'
 import transformMongooseDocs from '../../../../utils/response.js'
 
 //Create permission
-const create = (async (req, res, next)=>{
+const create = async (req, res, next)=>{
     const {name} = req.body
     const permission = await permissionLibs.createPermission(name)
 
@@ -15,6 +15,6 @@ const create = (async (req, res, next)=>{
         message:"Permission has been created!",
         data: {...permission}
     })
-})
+}
 
 export default {create}
