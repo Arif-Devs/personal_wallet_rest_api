@@ -4,13 +4,16 @@ import PermissionRole from '../model/permissionRole.js';
 import { generateSortType } from '../utils/query.js';
 
 
-//Create Permission in DB
+//Create Permission 
 
 const createPermission = async (name) => {
   try {
+    
     const permission = new Permission({ name }); // Create the new permission document
     await permission.save(); // Save the permission to the database
+    
     return permission._doc; // return individual records from the database
+  
   } catch (error) {
     throw serverError(error);
   }

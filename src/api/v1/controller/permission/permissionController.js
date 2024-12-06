@@ -10,8 +10,8 @@ const create = async (req, res, next)=>{
     const permission = await permissionLibs.createPermission(name)
 
     // Send response to user
-    res.status(200).json({
-        code:200,
+    res.status(201).json({
+        code:201,
         message:"Permission has been created!",
         data: {...permission}
     })
