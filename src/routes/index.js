@@ -17,8 +17,9 @@ router.get('/health', (_req, res) =>
  router.post('/auth/register',authRequest.registerRequestValidator, authController.register )
 
 //Permission Routes->
+//TODO add authentication and authorization middleware -> authenticate, authorization(['create-permission'])
  router.route('/permissions')
-.post(authenticate, authorization(['create-permission']),permissionRequest.permissionCreateRequest,requestValidator,PermissionController.create)
+.post(permissionRequest.permissionCreateRequest,requestValidator,PermissionController.create)
 
 //Role route
 router.route('/roles')

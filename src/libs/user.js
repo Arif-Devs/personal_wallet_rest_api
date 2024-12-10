@@ -8,7 +8,7 @@ import {DEFAULTPASS} from '../config/auth.js'
 import Role from '../model/role.js'
 
 // Register new user
-const registerUser = async ({ userName, email, password, phone, roleId }) => {
+const registerUser = async ({ userName, email, password, phone = '', roleId }) => {
     try {
         const hashPassword = await bcrypt.hash(password ? password : DEFAULTPASS, 10);
        
@@ -21,21 +21,25 @@ const registerUser = async ({ userName, email, password, phone, roleId }) => {
         const user = new User({
             userName,
             email,
-            phone: phone ? phone : '',
+            phone,
             password: hashPassword,
             roleId: roleId ? roleId : userRole._doc._id,
 
         });
 
         // Generate access & refresh token 
-        const { accessToken, refreshToken } = tokenLibs.generateAccess_RefreshToken({ payload: { ...user. _doc, issuedIp: ip.address()}});
-        user.refresh_token = refreshToken
-        user.issuedIp = ip.address();
+        const ipAddress = ip.address()
+        const tokens = tokenLibs.generateAccess_RefreshToken({ payload: { ...user. _doc, issuedIp: ipAddress}});
+        
+        user.refresh_token = tokens.refreshToken
+        user.issuedIp = ipAddress;
+        
         await user.save();
-        return {user, accessToken}
+        
+        return {user, accessToken: tokens.accessToken}
     } catch (error) {
         throw serverError(error.message)
     }
 }
 
-export default registerUser;
+export default {registerUser};

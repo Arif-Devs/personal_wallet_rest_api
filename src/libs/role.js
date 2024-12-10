@@ -14,7 +14,7 @@ const create = async(name, permissions)=>{
         role.name = name
         await role.save()
 
-        if(permissions.length > 0){
+        if(permissions && permissions.length > 0){
             for(const item of permissions){
                 if(mongoose.Types.ObjectId.isValid(item)){
                     const existingAssociation = await PermissionRole.findOne({
@@ -39,7 +39,7 @@ const create = async(name, permissions)=>{
         }
 
         const permissionIds = await permissionLibs.getPermissionsNameBasedOnRoleId(role._id)
-        return{role: role.toJSON(), permissions: permissionIds}
+        return{role: role.toJSON(), permission: permissionIds}
 
 
     } catch (error) {

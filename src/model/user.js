@@ -39,7 +39,7 @@ const userSchema = new Schema({
         type: String,
         require: false,
     }
-},{timestamps : true});
+},{timestamps : true, versionKey: false});
 
 
 
