@@ -7,8 +7,8 @@ import ip from 'ip'
 import {DEFAULTPASS} from '../config/auth.js'
 import Role from '../model/role.js'
 
-// Register new user
-const registerUser = async ({ userName, email, password, phone = '', roleId }) => {
+// Register or create new user
+const registerOrCreateUser = async ({ userName, email, password, phone = '', roleId }) => {
     try {
         const hashPassword = await bcrypt.hash(password ? password : DEFAULTPASS, 10);
        
@@ -42,4 +42,4 @@ const registerUser = async ({ userName, email, password, phone = '', roleId }) =
     }
 }
 
-export default {registerUser};
+export default {registerOrCreateUser};

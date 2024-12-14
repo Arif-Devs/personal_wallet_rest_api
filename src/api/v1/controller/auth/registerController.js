@@ -5,7 +5,7 @@ const register = async (req, res, next) => {
         // request from body params
         const { userName, email, password, confirm_password, phone } = req.body
         // create user
-        const { user, accessToken } = await userLibs.registerUser({ userName, email, password, confirm_password, phone })
+        const { user, accessToken } = await userLibs.registerOrCreateUser({ userName, email, password, confirm_password, phone })
         // send response
         res.status(200).json({
             code: 200,
