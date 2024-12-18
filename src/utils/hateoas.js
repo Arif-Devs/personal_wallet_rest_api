@@ -13,8 +13,9 @@ const createHateoasLinkGenerator = (baseUrl, id, slug)=>{
 const generateAllDataHateoasLinks = (data,url,baseUrl,page,totalPage,queryParams)=>{
     const links = {}
     // add self link
-    links.self = `${process.env.API_BASE_URL}${self}`
-
+    if(data.length>0){
+    links.self = `${process.env.API_BASE_URL}${url}`
+    }
     // Add nextPage link if applicable
     if(page<totalPage){
         const nextPageQueryString = generateQueryString(`${process.env.API_BASE_URL}${baseUrl}`, {...queryParams, page:page+1})

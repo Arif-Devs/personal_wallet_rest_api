@@ -9,4 +9,13 @@ const generateQueryString = (path, query)=>{
   return `${path}?${encodeQuery}`
 }
 
-export { generateSortType, generateQueryString };
+const generateSelectedItems = (array, defaultArray)=>{
+  let selectedArray = defaultArray
+  if(array.length>0){
+    selectedArray = array.split(',').map((item)=>item.trim())
+  }
+  return selectedArray
+  
+}
+
+export { generateSortType, generateQueryString, generateSelectedItems };

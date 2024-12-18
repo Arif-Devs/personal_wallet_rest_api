@@ -4,9 +4,11 @@ import authController from '../api/v1/controller/auth/index.js';
 import PermissionController from '../api/v1/controller/permission/index.js';
 import RoleController from '../api/v1/controller/role/index.js';
 import userController from '../api/v1/controller/user/index.js'
-import  {authRequest}  from '../request/index.js';
+import  {authRequest, userRequest}  from '../request/index.js';
 import  {requestValidator, authenticate, authorization}  from '../middleware/index.js';
 import  {permissionRequest}  from '../request/index.js';
+
+
 
 
 //Health route
@@ -24,8 +26,9 @@ router.get('/health', (_req, res) =>
 
 
  //Permission Routes ->
-//TODO add authentication and authorization middleware -> authenticate, authorization(['create-permission'])
  router.route('/permissions')
+ 
+ //TODO add authentication and authorization middleware -> authenticate, authorization(['create-permission'])
 .post(permissionRequest.permissionCreateRequest,requestValidator,PermissionController.create)
 
 
@@ -38,9 +41,8 @@ router.route('/roles')
 
 //User route ->
 router.route('/users')
-.post(userController.create)
-
-
+.post( userRequest.createRequestValidator, requestValidator, userController.create)//TODO add authenticate, authorization middleware
+.get(userController.getAll)
 
 
 

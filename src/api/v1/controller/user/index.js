@@ -1,3 +1,3 @@
-import create from "./userController.js";
+import {create, getAll} from "./userController.js";
 
-export default {create}
+export default {create, getAll }

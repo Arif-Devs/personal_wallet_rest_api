@@ -33,18 +33,20 @@ const isEmail = (value) => {
 
 // sign request body validator
 const createRequestValidator = [
+    
     body('userName')
     .trim()
     .isAlphanumeric()
     .withMessage('User name must be a valid text format')
     .bail()
     .isLength({ min: 5, max: 12 })
-    .withMessage('Username must be between 5-10 characters')
+    .withMessage('Username must be between 5-12 characters')
     .custom(async (value) => {
-        const userExist = User.findOne({ userName: value })
+        const userExist =await User.findOne({ userName: value })
         if (userExist) {
             throw new Error('User name already exist')
         };
+        return true
     }),
     body('email')
         .isEmail().withMessage('Enter valid email')
