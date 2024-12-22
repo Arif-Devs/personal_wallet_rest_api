@@ -3,6 +3,7 @@ import middleware from "./presetMiddleware.js";
 import  {requestValidator}  from "./requestValidator.js";
 import authenticate from "./authenticate.js";
 import authorization from "./authorization.js";
+import {hasOwn} from "./hasOwn.js";
 
 
 export  {
@@ -11,6 +12,7 @@ export  {
     globalErrorHandler,
     requestValidator,
     authenticate,
-    authorization
+    authorization,
+    hasOwn
     
 }

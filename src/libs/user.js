@@ -1,11 +1,15 @@
 import bcrypt from 'bcrypt'
 import User from '../model/user.js'
+import Expanse from '../model/expanse.js'
+import Income from '../model/income.js'
+import Account from '../model/account.js'
+import Role from '../model/role.js'
 import { notFoundError, serverError } from '../utils/error.js'
 import {tokenLibs} from './index.js'
 import ip from 'ip'
 import {DEFAULTPASS} from '../config/auth.js'
-import Role from '../model/role.js'
 import { generateSelectedItems, generateSortType } from '../utils/query.js'
+
 
 
 
@@ -91,8 +95,61 @@ const getAllData = async({search, sortBy, sortType, limit, page, role, select, p
         throw serverError(error)
     }
 
-
-
 }
 
-export default {registerOrCreateUser, getAllData};
+//Get single item
+const getSingleById = async({select, populate, id})=>{
+    try {
+        //validation input id
+        if(!id || !mongoose.Types.ObjectId.isValid(id)){
+            throw new Error('Invalid id')
+        }
+    
+    //generate selected fields and populate options
+    const selectedColumns = generateSelectedItems(select,['_id', 'userName', 'roleId', 'email', 'phone', 'createdAt', 'updatedAt' ])
+    const populateFields = generateSelectedItems(populate,['expanse', 'income', 'role', 'account']);
+    
+    //base query and populate roleId if request
+    let userQuery = User.findById(id).select(selectedColumns)
+    if(populateFields.includes('role')){
+        userQuery = userQuery.populate({
+            path: 'roleId',
+            select: 'name, createdAt, updatedAt, _id'
+        })
+    }
+
+    let user = await userQuery.exec()
+    if(!user){
+        throw notFoundError()
+    }
+
+    user = user.toObject()
+
+    if(populateFields.includes('expanse')){
+        const expanses = await Expanse.find({userId: id}).exec()
+        user.expanses = expanses
+    }
+
+    if(populateFields.includes('income')){
+        const incomes = await Income.find({userId: id}).exec()
+        user.incomes = incomes
+    }
+
+    if(populateFields.includes('account')){
+        const accounts = await Account.find({userId: id}).exec()
+        user.accounts = accounts
+    }
+
+    return user;
+
+    } catch (error) {
+        throw serverError(error)
+    }
+}
+
+
+
+
+
+
+export default {registerOrCreateUser, getAllData, getSingleById};

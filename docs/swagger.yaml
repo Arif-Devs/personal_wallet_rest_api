@@ -533,7 +533,7 @@ paths:
                     example: 200
                   message:
                     type: string
-                    example: data retrive success
+                    example: data retrieve success
                   data:
                     allOf:
                       - type: object
@@ -3572,8 +3572,7 @@ components:
       required: true
       description: Document unique id
       schema:
-        type: integer
-        format: int32
+        type: string
         example: "58fh23h5h7f5f6d8y7h5f4"
     token:
       in: query

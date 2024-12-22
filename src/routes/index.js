@@ -43,6 +43,8 @@ router.route('/roles')
 router.route('/users')
 .post( userRequest.createRequestValidator, requestValidator, userController.create)//TODO add authenticate, authorization middleware
 .get(userController.getAll)
+router.route('/users/:id')
+.get(userController.getUserById)
 
 
 

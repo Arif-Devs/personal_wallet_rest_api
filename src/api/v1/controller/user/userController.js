@@ -5,6 +5,8 @@ import transformMongooseDocs from '../../../../utils/response.js'
 import {generateAllDataHateoasLinks} from '../../../../utils/hateoas.js'
 import generatePagination from '../../../../utils/pagination.js'
 import Role from "../../../../model/role.js";
+import {hasOwn} from "../../../../middleware/index.js";
+import { serverError, unAuthorizedError } from "../../../../utils/error.js";
 
 
 
@@ -65,4 +67,38 @@ const getAll = async(req, res, next)=>{
  }
 }
 
-export {create, getAll}
+//get single data
+
+const getUserById = async(req, res, next)=>{
+    try {
+        const hasPermission = hasOwn(req.permissions, req.params.id, req.user)
+    // check the user has the right permission
+    if(!hasPermission) {
+        throw unAuthorizedError('you do not have permission to modify or read other user data')
+    }
+
+    const {select=SELECT, populate=POPULATE} = req.query
+    const {id} = req.params
+
+    //fetch user data from database
+    const user = await userLibs.getAllData({select, populate, id})
+
+    //send response
+    const result = {
+        code: 200,
+        message: 'data retrieve success!',
+        data:{
+            ...user,
+            links: `${process.env.API_BASE_URL}${req.url}`
+        }
+    }
+    return res.status(200).json(result)
+
+
+    } catch (error) {
+        throw serverError(error)
+    }
+}
+
+
+export {create, getAll, getUserById}

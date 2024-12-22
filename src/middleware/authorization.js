@@ -7,12 +7,12 @@ const authorization = (requiredPermission=[])=>async(req, res, next)=>{
         
         //find roleId, permission based roleId 
         const existRole = await Role.findById(req.user.roleId).exec()
-        const userPermission = await permissionLibs.getPermissionsNameBasedOnRoleId(req.user.roleId)||[]
+        const userPermissions = await permissionLibs.getPermissionsNameBasedOnRoleId(req.user.roleId)||[]
         const roleName = existRole._doc.name.toLowerCase()
 
         req.permissions = {
-            requiredPermission,
-            userPermission: userPermission.flat(),
+            requiredPermissions,
+            userPermissions: userPermissions.flat(),
             userRole: roleName
         }
 
@@ -20,12 +20,12 @@ const authorization = (requiredPermission=[])=>async(req, res, next)=>{
             return next()
         }else{
             // Check if the user has any of the requiredPermissions
-            const hasRequiredPermission = requiredPermission.some((requiredPermission)=>{
-                return userPermission.flat().includes(requiredPermission)
+            const hasRequiredPermission = requiredPermissions.some((requiredPermission)=>{
+                return userPermissions.flat().includes(requiredPermission)
             }) 
 
             if(!hasRequiredPermission){
-                throw unAuthenticateError()
+                throw unAuthorizedError('access denied!')
             }
             next()
         }

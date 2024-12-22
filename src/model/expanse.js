@@ -18,7 +18,7 @@ const expanseSchema = new Schema(
     categoryId: {
       require: true,
       type: Schema.ObjectId,
-      ref: Category,
+      ref: 'Category',
     },
     accountId: {
       require: true,

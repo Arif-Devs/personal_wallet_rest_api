@@ -1,3 +1,3 @@
-import {create, getAll} from "./userController.js";
+import {create, getAll, getUserById} from "./userController.js";
 
-export default {create, getAll }
+export default {create, getAll, getUserById }
