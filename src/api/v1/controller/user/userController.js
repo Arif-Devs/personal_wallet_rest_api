@@ -5,6 +5,7 @@ import transformMongooseDocs from '../../../../utils/response.js'
 import {generateAllDataHateoasLinks} from '../../../../utils/hateoas.js'
 import generatePagination from '../../../../utils/pagination.js'
 import Role from "../../../../model/role.js";
+import bcrypt from 'bcrypt'
 import {hasOwn} from "../../../../middleware/index.js";
 import { serverError, unAuthorizedError } from "../../../../utils/error.js";
 
@@ -69,16 +70,21 @@ const getAll = async(req, res, next)=>{
 
 //get single data
 
-const getUserById = async(req, res, next)=>{
+const getUserById = async(req, res, _next)=>{
     try {
         const hasPermission = hasOwn(req.permissions, req.params.id, req.user)
+        
     // check the user has the right permission
     if(!hasPermission) {
         throw unAuthorizedError('you do not have permission to modify or read other user data')
-    }
-
-    const {select=SELECT, populate=POPULATE} = req.query
-    const {id} = req.params
+    }else{
+        let {select,populate} = req.query;
+        let {id} = req.params
+        console.log(req.query);
+        
+        // set default search params   
+        select  = select || SELECT
+        populate = populate || POPULATE
 
     //fetch user data from database
     const user = await userLibs.getAllData({select, populate, id})
@@ -93,7 +99,7 @@ const getUserById = async(req, res, next)=>{
         }
     }
     return res.status(200).json(result)
-
+    }
 
     } catch (error) {
         throw serverError(error)

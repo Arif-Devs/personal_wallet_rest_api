@@ -100,30 +100,32 @@ const getAllData = async({search, sortBy, sortType, limit, page, role, select, p
 //Get single item
 const getSingleById = async({select, populate, id})=>{
     try {
-        //validation input id
+       // validation input id
         if(!id || !mongoose.Types.ObjectId.isValid(id)){
             throw new Error('Invalid id')
         }
     
     //generate selected fields and populate options
     const selectedColumns = generateSelectedItems(select,['_id', 'userName', 'roleId', 'email', 'phone', 'createdAt', 'updatedAt' ])
+    
     const populateFields = generateSelectedItems(populate,['expanse', 'income', 'role', 'account']);
+   
     
     //base query and populate roleId if request
-    let userQuery = User.findById(id).select(selectedColumns)
-    if(populateFields.includes('role')){
-        userQuery = userQuery.populate({
-            path: 'roleId',
-            select: 'name, createdAt, updatedAt, _id'
-        })
-    }
+    let userQuery =await User.findById(id)
+    .select(selectedColumns)
+    .populate(populateFields.includes('role')?{
+        path: 'roleId',
+        select: 'name, createdAt, updatedAt, _id'
+    }: '')
+    
 
     let user = await userQuery.exec()
     if(!user){
         throw notFoundError()
     }
 
-    user = user.toObject()
+    user = user._doc
 
     if(populateFields.includes('expanse')){
         const expanses = await Expanse.find({userId: id}).exec()

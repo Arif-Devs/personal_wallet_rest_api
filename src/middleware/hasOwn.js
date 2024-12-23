@@ -31,4 +31,4 @@ export const hasOwn = (permissions, id, user) => {
   }
   return false;
 };
-export default hasOwn;
+
