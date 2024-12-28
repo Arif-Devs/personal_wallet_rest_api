@@ -10,7 +10,6 @@ const transformMongooseDocs = (items = [], url='')=>{
 }
 
 
-export default{
-    transformMongooseDocs,
+export default
+    transformMongooseDocs
     
-}

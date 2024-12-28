@@ -60,15 +60,14 @@ const getAllData = async({search, sortBy, sortType, limit, page, role, select, p
         let sortTypeForDB = generateSortType(sortType);
         let selectedColumns = generateSelectedItems(select,['_id', 'userName', 'email', 'phone', 'roleId', 'createdAt','updatedAt']);
         let populateFields = generateSelectedItems(populate,['role', 'account', 'expanse', 'income', 'goal'])
-
+        console.log({search, sortBy, sortType, limit, page, role, select, populate});
+        
         
         // Filter object for search and role
         let filter = {}
         if(search) filter.name = {$regex: search, $options: 'i'}
         if(role) filter.roleId = role
-        
-        console.log('Filter:', filter);
-        
+       
         let query = await User.find(filter)
         .select(selectedColumns)
         .sort({[sortBy]: sortTypeForDB})
@@ -99,6 +98,8 @@ const getAllData = async({search, sortBy, sortType, limit, page, role, select, p
 
 //Get single item
 const getSingleById = async({select, populate, id})=>{
+    console.log({select: select, populate: populate, id:id})
+    
     try {
        // validation input id
         if(!id || !mongoose.Types.ObjectId.isValid(id)){

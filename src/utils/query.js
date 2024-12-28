@@ -10,6 +10,8 @@ const generateQueryString = (path, query)=>{
 }
 
 const generateSelectedItems = (array, defaultArray)=>{
+  console.log(array);
+  
   let selectedArray = defaultArray
   if(array.length>0){
     selectedArray = array.split(',').map((item)=>item.trim())

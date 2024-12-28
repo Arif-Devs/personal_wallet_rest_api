@@ -71,8 +71,11 @@ const getAll = async(req, res, next)=>{
 //get single data
 
 const getUserById = async(req, res, _next)=>{
+    console.log({req});
+    
     try {
-        const hasPermission = hasOwn(req.permissions, req.params.id, req.user)
+
+    const hasPermission = hasOwn(req.permissions, req.params.id, req.user)
         
     // check the user has the right permission
     if(!hasPermission) {
@@ -95,7 +98,9 @@ const getUserById = async(req, res, _next)=>{
         message: 'data retrieve success!',
         data:{
             ...user,
-            links: `${process.env.API_BASE_URL}${req.url}`
+            links: `${process.env.API_BASE_URL}${req.url}`,
+            
+            
         }
     }
     return res.status(200).json(result)

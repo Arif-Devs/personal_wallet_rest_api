@@ -2,7 +2,9 @@ import { permissionLibs } from "../libs/index.js";
 import Role from "../model/role.js";
 import { unAuthenticateError, unAuthorizedError } from "../utils/error.js";
 
-const authorization = (requiredPermission=[])=>async(req, res, next)=>{
+const authorization = (requiredPermissions=[])=>async(req, res, next)=>{
+    console.log(req);
+    
     try {
         
         //find roleId, permission based roleId 

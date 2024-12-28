@@ -64,6 +64,7 @@ const registerRequestValidator = [
             if (value !== req.body.password) {
                 throw new Error('Password not match')
             }
+            return true
         })
 ];
 
