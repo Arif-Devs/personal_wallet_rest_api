@@ -16,7 +16,8 @@
     "yamljs": "^0.3.0"
   },
   "scripts": {
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "seed": "node ./src/dbSeeder/index.js"
   },
   "name": "personal_wallet-api",
   "version": "1.0.0",

@@ -1,5 +1,5 @@
-import { PERMISSIONSARRAY } from '../config/auth'
-import Permission from '../config/auth.js'
+import { PERMISSIONSARRAY } from '../config/auth.js'
+import Permission from '../model/permission.js'
 
 const permissionSeeder = async () => {
   try {

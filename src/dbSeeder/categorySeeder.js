@@ -1,4 +1,4 @@
-import generateSlug from '../utils/generate'
+import generateSlug from '../utils/generate.js'
 import Category from '../model/category.js'
 import { faker } from '@faker-js/faker'
 
@@ -21,4 +21,4 @@ const categorySeed = async (numberOfAccount = 5) => {
   return category
 }
 
-export default category
+export default categorySeed
