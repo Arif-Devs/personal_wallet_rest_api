@@ -9,7 +9,6 @@ const roleSeeder = async (roles = ['admin', 'user', 'editor']) => {
         await Role.deleteMany()
         await PermissionRole.deleteMany()
 
-        console.log('Creating roles, please wait...')
 
         for (const roleName of roles) {
             const role = new Role({ name: roleName })

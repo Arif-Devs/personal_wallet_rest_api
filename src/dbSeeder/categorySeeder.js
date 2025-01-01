@@ -4,9 +4,9 @@ import { faker } from '@faker-js/faker'
 
 const categorySeed = async (numberOfAccount = 5) => {
   await Category.deleteMany()
-  console.log('category are being created....')
+  
 
-  let category = []
+  let categories = []
   for (let i = 0; i < numberOfAccount; i++) {
     const name = faker.word.noun()
     const slug = generateSlug(name)
@@ -14,11 +14,11 @@ const categorySeed = async (numberOfAccount = 5) => {
       name,
       slug,
     })
-    category, push(category._doc._id)
+    categories.push(category._doc._id)
     await category.save()
   }
   console.log('category created successful!')
-  return category
+  return categories
 }
 
 export default categorySeed
